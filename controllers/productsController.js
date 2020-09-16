@@ -1,43 +1,36 @@
-
+const productsModel = require("../models/productsModels");
 module.exports = {
-    getAll:(req, res, next)=>{
-      console.log(req.query)
-      const productos = [
-          {
-              id:1,
-              name:"Moto g",
-              price:1000
-          },
-          {
-              id:2,
-              name:"Moto x",
-              price:1500
-          }
-      ]
-      res.json(productos);
+    getAll: async (req, res, next) => {
+        console.log(req.query)
+        const productos = await productsModel.find({}).populate("category");
+        res.json(productos);
     },
-    getById:function(req, res, next) {
+    getById: async function (req, res, next) {
         console.log(req.params.id);
-        const producto = {
-            id:1,
-            name:"Moto g",
-            price:1000
-        }
+        const producto = await productsModel.findById(req.params.id);
         res.json(producto);
     },
-    create:function(req, res, next) {
+    create: function (req, res, next) {
         console.log(req.body);
-        
-        res.json(req.body);
+        const product = new productsModel({
+            name: req.body.name,
+            sku: req.body.sku,
+            description: req.body.description,
+            price: req.body.price,
+            quantity: req.body.quantity,
+            category: req.body.category
+        })
+        product.save();
+        res.json(product);
     },
-    update:function(req, res, next) {
-        console.log(req.params.id,req.body);
-        
-        res.json(req.body);
+    update: async function (req, res, next) {
+        console.log(req.params.id, req.body);
+        const producto = await productsModel.update({ _id: req.params.id }, req.body, { multi: false })
+        res.json(producto);
     },
-    delete:function(req, res, next) {
+    delete: async function (req, res, next) {
         console.log(req.params.id);
-        
-        res.json({});
+        const data = await productsModel.deleteOne({ _id: req.params.id });
+        res.json(data);
     }
 }
