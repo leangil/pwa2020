@@ -1,5 +1,10 @@
 const mongoose = require("../bin/mongodb");
-
+const tagsSchema = new mongoose.Schema({
+    name:{
+        type:String,
+        required:true
+    }
+})
 const productsSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -37,7 +42,9 @@ const productsSchema = new mongoose.Schema({
             return price_get * 1.21;
         }
     },
-    quantity: Number
+    quantity: Number,
+    tags:[tagsSchema]
+    
 });
 productsSchema.virtual("price_currency").get(function () {
     return "$ " + this.price;
