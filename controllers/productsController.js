@@ -1,7 +1,7 @@
 const productsModel = require("../models/productsModels");
 module.exports = {
     getAll: async (req, res, next) => {
-        console.log(req.query)
+        console.log(req.body.tokenData)
         const productos = await productsModel.find({}).populate("category");
         res.json(productos);
     },

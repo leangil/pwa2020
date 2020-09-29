@@ -8,7 +8,7 @@ module.exports = {
         if(userAdmin){
             if(bcrypt.compareSync(req.body.password,userAdmin.password)){
                 //User y password ok, generar token
-                const token = jwt.sign({userId:userAdmin._id},"123");
+                const token = jwt.sign({userId:userAdmin._id},req.app.get("secretKey"),{expiresIn:"1h"});
                 res.json({message:"usuario ok",token:token});
             }else{
                 res.json({message:"password incorrecto"});
