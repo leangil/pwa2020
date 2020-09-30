@@ -1,4 +1,5 @@
 const mongoose = require("../bin/mongodb");
+const errorMessage = require("../util/errorMessage")
 const tagsSchema = new mongoose.Schema({
     name:{
         type:String,
@@ -9,18 +10,16 @@ const productsSchema = new mongoose.Schema({
     name: {
         type: String,
         index: true,
-        minlength: 1,
-        maxlength: 255,
+        maxlength: [255,errorMessage.GENERAL.maxlength],
         trim: true,
-        required: true
+        required: [true,errorMessage.GENERAL.campo_obligatorio]
     },
     sku: {
         type: String,
         unique: true,
-        minlength: 1,
-        maxlength: 255,
+        maxlength: [255,errorMessage.GENERAL.maxlength],
         trim: true,
-        required: true
+        required: [true,errorMessage.GENERAL.campo_obligatorio]
     },
     description: {
         type: String,
@@ -36,8 +35,8 @@ const productsSchema = new mongoose.Schema({
     },
     price: {
         type: Number,
-        min: 1,
-        required: true,
+        min: [1,errorMessage.GENERAL.minlength],
+        required: [true,errorMessage.GENERAL.campo_obligatorio],
         get: function (price_get) {
             return price_get * 1.21;
         }
@@ -46,6 +45,17 @@ const productsSchema = new mongoose.Schema({
     tags:[tagsSchema]
     
 });
+productsSchema.statics.findBydIdAndValidate = async function(id){
+    const document = await this.findById(id);
+    if(!document){
+        return{
+            error:true,
+            message:"No existe categoria"
+        }
+        
+    }
+    return document;
+}
 productsSchema.virtual("price_currency").get(function () {
     return "$ " + this.price;
 })
