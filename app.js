@@ -9,10 +9,12 @@ var usersRouter = require('./routes/users');
 var productsRouter = require('./routes/products');
 var categoriesRouter = require('./routes/categories');
 const jwt = require('jsonwebtoken');
+require('dotenv').config() //Incluir para el env
 
 var app = express();
 
-app.set('secretKey',"pwa2020C");
+console.log(process.env.SECRET_KEY) //Acceso a variable env
+app.set('secretKey',process.env.SECRET_KEY);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
