@@ -29,12 +29,13 @@ userSchema.pre("save",function(next){
     next();
 })
 userSchema.statics.validateUser = async function(email,password){
-    const userAdmin = await this.findOne({email:email});
-    if(userAdmin){
-        if(bcrypt.compareSync(password,userAdmin.password)){
+    const userWeb = await this.findOne({email:email});
+    
+    if(userWeb){
+        if(bcrypt.compareSync(password,userWeb.password)){
             //User y password ok, generar token
             
-            return {error:false,message:"usuario ok",userAdmin:userAdmin};
+            return {error:false,message:"usuario ok",userWeb:userWeb};
         }else{
             return {error:true,message:"password incorrecto"};
         }
