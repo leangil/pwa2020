@@ -26,7 +26,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 /** HEADER INICIO */
 app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin','*');
@@ -43,7 +42,8 @@ app.options("/*", function(req, res, next){
 
 
 app.use('/users', usersRouter);
-app.use('/productos', productsRouter);
+app.use('/productos', validateUser,productsRouter);
+//app.use('/productos',productsRouter);
 app.use('/categories',validateUser, categoriesRouter);
 
 
