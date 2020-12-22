@@ -30,6 +30,7 @@ module.exports = {
             const document = await userWeb.save();
             res.json(document);
         }catch(e){
+            console.log("error",e)
             next(e)
         }
         

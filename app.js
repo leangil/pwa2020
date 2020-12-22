@@ -8,6 +8,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var productsRouter = require('./routes/products');
 var categoriesRouter = require('./routes/categories');
+var ventasRouter = require('./routes/ventas');
+var mercadopagoRouter = require('./routes/mercadopago');
 const jwt = require('jsonwebtoken');
 require('dotenv').config() //Incluir para el env
 
@@ -42,10 +44,11 @@ app.options("/*", function(req, res, next){
 
 
 app.use('/users', usersRouter);
-app.use('/productos', validateUser,productsRouter);
-//app.use('/productos',productsRouter);
+//app.use('/productos', validateUser,productsRouter);
+app.use('/productos',productsRouter);
 app.use('/categories',validateUser, categoriesRouter);
-
+app.use('/ventas',validateUser, ventasRouter);
+app.use('/mercadopago', mercadopagoRouter);
 
 
 
