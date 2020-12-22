@@ -55,7 +55,8 @@ module.exports = {
                 ],
                 external_reference:data._id.toString(),
                 payer : {
-                    email : 'leangilutn@gmail.com'
+                    email : 'leangilutn@gmail.com',
+                    name:"Leandro"
                 },
                 notification_url : 'http://miurl.com/'
             }
@@ -63,7 +64,7 @@ module.exports = {
             ventas.payment.status = "pending";
             ventas.payment.preferenceId = mercadopagoResponse.body.id;
             await ventas.save();
-            res.status(201).json({"stauts":"ok","data":data,"mp":mercadopagoResponse})
+            res.status(201).json({"stauts":"ok","data":data,"mp":mercadopagoResponse,"init_point":mercadopagoResponse.mp.body.init_point})
         }catch(e){
             console.log(e)
         }

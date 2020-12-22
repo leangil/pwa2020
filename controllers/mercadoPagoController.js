@@ -71,6 +71,7 @@ module.exports = {
                 const venta = await ventasModel.findById(document.externalId)
                 venta.payment.status=status
                 await venta.save();
+                res.status(200).send("OK")
             }
         }catch(e){
             console.log(e)

@@ -22,7 +22,7 @@ const paymentSchema = new mongoose.Schema({
     },
     method: {
       type: String,
-      enum: ["mercadopago"],
+      enum: ["mercadopago","efectivo"],
       required: [true, "Campo obligatorio"],
       trim: true,
     },
