@@ -53,7 +53,7 @@ module.exports = {
                         unit_price : data["total"]
                     }
                 ],
-                external_reference:data._id,
+                external_reference:data._id.toString(),
                 payer : {
                     email : 'leangilutn@gmail.com'
                 },
